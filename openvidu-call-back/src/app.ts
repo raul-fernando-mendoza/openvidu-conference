@@ -13,6 +13,10 @@ app.use(express.json());
 
 app.use('/call', callController);
 
+app.get('/', (req, res) => {
+    res.send('Hello from openviducallback!')
+  })
+
 app.listen(SERVER_PORT, () => {
     console.log("---------------------------------------------------------");
     console.log(" ")

@@ -68,7 +68,8 @@ import { NotificationService } from './shared/services/notifications/notificatio
 import { StorageService } from './shared/services/storage/storage.service';
 import { CdkOverlayContainer } from './shared/config/custom-cdk-overlay-container';
 import { LocalUsersService } from './shared/services/local-users/local-users.service';
-import { LoginService } from './login.service'
+import { LoginService } from './login.service';
+import { LoginComponent } from './login/login.component'
 
 @NgModule({
 	declarations: [
@@ -95,7 +96,8 @@ import { LoginService } from './login.service'
 		HasFooterPipe,
 		HasToolbarPipe,
 		TooltipListPipe,
-		FooterComponent
+		FooterComponent,
+		LoginComponent
 	],
 	imports: [
 		FormsModule,

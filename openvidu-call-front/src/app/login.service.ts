@@ -15,7 +15,7 @@ export class LoginService {
 
   constructor(private networkService:NetworkService) { }
 
-  user:User
+  private user:User
   async login(userId:string, password:string){
     const value = await this.networkService.login(userId, password).then(
 			data => {
@@ -39,5 +39,9 @@ export class LoginService {
       if(found)
         return true
     }
+  }
+
+  getUser(){
+    return this.user;
   }
 }

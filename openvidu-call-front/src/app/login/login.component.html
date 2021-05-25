@@ -1,0 +1,11 @@
+<form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+	<input type="text" formControlName="userId"  />
+	<input type="text" formControlName="password"   />
+	<button type="submit" id="loginButton" >login</button>
+</form>
+
+<div *ngIf="error">
+	{{ error }}
+</div>
+
+<a routerLink="/">home</a>

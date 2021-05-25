@@ -15,10 +15,7 @@ export class HomeComponent implements OnInit {
 	public roomForm: FormControl;
 	public version = require('../../../package.json').version;
 
-	loginForm = new FormGroup({
-		userId: new FormControl(''),
-		password: new FormControl(''),
-	  });
+
 	  	
 
 	constructor(
@@ -75,17 +72,17 @@ export class HomeComponent implements OnInit {
 		)			
 	}
 
-	async onLogin(){
-		var userId = this.loginForm.controls.userId.value
-		var password = this.loginForm.controls.password.value
-		console.log("login", userId, password)
-		const user = await this.loginService.login(userId,password)
-		console.log( JSON.stringify(user) )
 
-		console.log( "is admin",this.loginService.isAdmin() )
-	}
 
 	isAdmin(){
 		return this.loginService.isAdmin()
+	}
+
+	isLoggedIn(){
+		if( this.loginService.getUser() ){
+			return true
+		}
+		return false;
+			
 	}
 }
