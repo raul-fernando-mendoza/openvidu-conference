@@ -6,6 +6,7 @@ import { ChatService } from '../../services/chat/chat.service';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { TokenService } from '../../services/token/token.service';
 import { LocalUsersService } from '../../services/local-users/local-users.service';
+import { LoginService } from 'src/app/login.service';
 
 @Component({
 	selector: 'app-toolbar',
@@ -23,11 +24,17 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 	@Input() isConnectionLost: boolean;
 	@Input() hasVideoDevices: boolean;
 	@Input() hasAudioDevices: boolean;
+
+	@Input() isRecordingsStarted: boolean;
 	@Output() micButtonClicked = new EventEmitter<any>();
 	@Output() camButtonClicked = new EventEmitter<any>();
 	@Output() screenShareClicked = new EventEmitter<any>();
 	@Output() layoutButtonClicked = new EventEmitter<any>();
 	@Output() leaveSessionButtonClicked = new EventEmitter<any>();
+
+	@Output() startRecordingButtonClicked = new EventEmitter<any>();
+
+	@Output() stopRecordingButtonClicked = new EventEmitter<any>();
 
 	mySessionId: string;
 
@@ -48,7 +55,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 		private utilsSrv: UtilsService,
 		private chatService: ChatService,
 		private tokenService: TokenService,
-		private localUsersService: LocalUsersService
+		private localUsersService: LocalUsersService,
+
+		private loginService:LoginService
 	) {}
 
 	ngOnDestroy(): void {
@@ -120,5 +129,17 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 	toggleFullscreen() {
 		this.utilsSrv.toggleFullscreen('videoRoomNavBar');
 		this.fullscreenIcon = this.fullscreenIcon === VideoFullscreenIcon.BIG ? VideoFullscreenIcon.NORMAL : VideoFullscreenIcon.BIG;
+	}
+
+	toggleRecordButton(){
+		if( this.isRecordingsStarted ){
+			this.stopRecordingButtonClicked.emit()
+		}
+		else this.startRecordingButtonClicked.emit()
+		
+		
+	}
+	isAdmin(){
+		return this.loginService.isAdmin() 
 	}
 }

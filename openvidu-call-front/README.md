@@ -1,3 +1,8 @@
+//to run in case error of memory
+node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng serve --host 0.0.0.0
+
+localhost:4200
+
 # OpenviduCall
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.1.

@@ -85,4 +85,61 @@ export class NetworkService {
 				});
 		});
 	}
+	RecordingsStart(sessionId: string): Promise<string> {
+		try {
+			this.log.d('Getting token from backend');
+			return this.http.post<any>(this.baseHref + 'call/recordings/start', {sessionId}).toPromise();
+		} catch (error) {
+			if (error.status === 404) {
+				throw {status: error.status, message: 'Cannot connect with backend. ' + error.url + ' not found'};
+			}
+			throw error;
+		}
+	}
+	RecordingsStop(recordingId: string): Promise<string> {
+		try {
+			this.log.d('Getting token from backend');
+			return this.http.post<any>(this.baseHref + 'call/recordings/stop', {recordingId:recordingId}).toPromise();
+		} catch (error) {
+			if (error.status === 404) {
+				throw {status: error.status, message: 'Cannot connect with backend. ' + error.url + ' not found'};
+			}
+			throw error;
+		}
+	}	
+
+	RecordingsDelete(recordingId: string): Promise<string> {
+		try {
+			this.log.d('delete record from backend');
+			return this.http.post<any>(this.baseHref + 'call/recordings/delete', {recordingId:recordingId}).toPromise();
+		} catch (error) {
+			if (error.status === 404) {
+				throw {status: error.status, message: 'Cannot connect with backend. ' + error.url + ' not found'};
+			}
+			throw error;
+		}
+	}		
+
+	login(userId: string, password:string): Promise<string> {
+		try {
+			this.log.d('login backend');
+			return this.http.post<any>(this.baseHref + 'call/login', {userId:userId, password:password}).toPromise();
+		} catch (error) {
+			if (error.status === 404) {
+				throw {status: error.status, message: 'Cannot connect with backend. ' + error.url + ' not found'};
+			}
+			throw error;
+		}
+	}	
+	Recordings(): Promise<string> {
+		try {
+			this.log.d('Getting recordings from backend');
+			return this.http.post<any>(this.baseHref + 'call/recordings', {}).toPromise();
+		} catch (error) {
+			if (error.status === 404) {
+				throw {status: error.status, message: 'Cannot connect with backend. ' + error.url + ' not found'};
+			}
+			throw error;
+		}
+	}	
 }

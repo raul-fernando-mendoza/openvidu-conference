@@ -63,10 +63,27 @@
 				<mat-icon matTooltip="Disable speaker layout" *ngIf="isAutoLayout">record_voice_over</mat-icon>
 			</button>
 
+			<button *ngIf="isAdmin()"
+				id="navStartRecordButton"
+				mat-icon-button
+				(click)="toggleRecordButton()"
+				[disabled]="isConnectionLost"
+				
+			>
+				<mat-icon *ngIf="!isRecordingsStarted" matTooltip="Start Recording">theaters</mat-icon>
+				<mat-icon *ngIf="isRecordingsStarted" color="warn" matTooltip="Stop Recording">pause</mat-icon>
+				
+			</button>
+
+
+
+
 			<!-- Leave seassion button -->
 			<button mat-icon-button (click)="leaveSession()" id="navLeaveButton" *ngIf="ovSettings | hasExit">
 				<mat-icon color="warn" matTooltip="Leave the session">power_settings_new</mat-icon>
 			</button>
+
+			
 		</div>
 	</div>
 	<div fxFlex="10%" fxFlexOrder="3" align="end">

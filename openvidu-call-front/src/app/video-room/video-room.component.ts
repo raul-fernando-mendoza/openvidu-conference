@@ -34,6 +34,9 @@ import { OpenViduLayoutService } from '../shared/services/layout/layout.service'
 import { TokenService } from '../shared/services/token/token.service';
 import { LocalUsersService } from '../shared/services/local-users/local-users.service';
 import { OpenViduWebrtcService } from '../shared/services/openvidu-webrtc/openvidu-webrtc.service';
+import { NetworkService } from '../shared/services/network/network.service';
+
+
 
 @Component({
 	selector: 'app-video-room',
@@ -75,6 +78,10 @@ export class VideoRoomComponent implements OnInit, OnDestroy {
 	private chatSubscription: Subscription;
 	private remoteUserNameSubscription: Subscription;
 
+	isRecordingsStarted:boolean=false
+
+	recordingId:string;
+
 	constructor(
 		private router: Router,
 		private utilsSrv: UtilsService,
@@ -86,7 +93,10 @@ export class VideoRoomComponent implements OnInit, OnDestroy {
 		private chatService: ChatService,
 		private storageSrv: StorageService,
 		private oVLayout: OpenViduLayoutService,
-		private tokenService: TokenService
+		private tokenService: TokenService,
+
+		private networkService:NetworkService,
+
 	) {
 		this.log = this.loggerSrv.get('VideoRoomComponent');
 	}
@@ -109,6 +119,7 @@ export class VideoRoomComponent implements OnInit, OnDestroy {
 		this.lightTheme = this.externalConfig?.getTheme() === Theme.LIGHT;
 		this.ovSettings = !!this.externalConfig ? this.externalConfig.getOvSettings() : new OvSettingsModel();
 		this.ovSettings.setScreenSharing(this.ovSettings.hasScreenSharing() && !this.utilsSrv.isMobile());
+
 	}
 
 	ngOnDestroy() {
@@ -134,6 +145,8 @@ export class VideoRoomComponent implements OnInit, OnDestroy {
 		if (this.remoteUserNameSubscription) {
 			this.remoteUserNameSubscription.unsubscribe();
 		}
+
+
 	}
 
 	onConfigRoomJoin() {
@@ -171,6 +184,8 @@ export class VideoRoomComponent implements OnInit, OnDestroy {
 			this.openViduWebRTCService.publishWebcamVideo(true);
 			this.openViduWebRTCService.publishWebcamVideo(false);
 		}
+
+		this.searchRecordingId()
 	}
 
 	leaveSession() {
@@ -536,4 +551,56 @@ export class VideoRoomComponent implements OnInit, OnDestroy {
 			this.participantsNameList = [...names];
 		});
 	}
+
+	searchRecordingId(){
+		this.networkService.Recordings().then(
+			data => {
+				let items = data["items"]
+				for( var i =0 ; i< items.length; i++){
+					let recording = items[i]
+					console.log("comparing" , recording["sessionId"], this.session.sessionId, recording["status"])
+					if( recording["sessionId"] == this.session.sessionId && recording["status"] == "started"){
+						console.log("recording is already started")
+						this.recordingId = recording["id"]
+						this.isRecordingsStarted = true
+						break
+					}
+				}
+			},
+			error => {
+				console.log("errror retriving list of recordings" + JSON.stringify(error))
+			}
+
+		)
+	}
+
+	startRecording(){
+		console.log("onrecording")
+		this.networkService.RecordingsStart(this.session.sessionId).then(
+			data => {
+				this.isRecordingsStarted = true
+				this.recordingId = data["id"]
+				console.log("recording started", JSON.stringify(data))
+			},
+			error => {
+				console.log("recordingsStart error", JSON.stringify(error))
+			}
+		)
+
+	}
+
+	stopRecording(){
+		this.networkService.RecordingsStop(this.recordingId).then(
+			data => {
+				this.isRecordingsStarted = false
+				this.recordingId = undefined
+				console.log("recording stopeed", JSON.stringify(data))
+			},
+			error => {
+				console.log("recordingsStop error", JSON.stringify(error))
+			}
+		)	
+	}	
+
+
 }

@@ -25,6 +25,9 @@
 			(screenShareClicked)="toggleScreenShare()"
 			(layoutButtonClicked)="toggleSpeakerLayout()"
 			(leaveSessionButtonClicked)="leaveSession()"
+			[isRecordingsStarted]="isRecordingsStarted"
+			(startRecordingButtonClicked)="startRecording()"
+			(stopRecordingButtonClicked)="stopRecording()"
 		></app-toolbar>
 
 		<mat-sidenav-container class="sidenav-container" id="room-container" [class.boundsLight]="lightTheme" fullscreen>

@@ -144,6 +144,9 @@ h4 {
   background: #009242;
 }
 
+.url{
+  display:block;
+}
 
 
 /* Small devices (portrait tablets and large phones, 600px and up) */

@@ -6,11 +6,13 @@
 		<div class="ovVersion">
 			<span>{{ version }}</span>
 		</div>
+
+
 	</mat-toolbar>
 	<div class="container">
 		<div class="ovInfo">
 			<img class="ovLogo" alt="OpenVidu Logo" src="assets/images/openvidu_logo.png" />
-			<h4>Videoconference rooms in one click</h4>
+			<h4>Videoconference rooms de Rax Academy</h4>
 		</div>
 		<div class="formContainer">
 			<div class="roomError" id="requiredNameError" *ngIf="roomForm.hasError('required')">
@@ -26,7 +28,24 @@
 				</div>
 			</form>
 		</div>
+
+		<div *ngIf="isAdmin()">
+			<div class="url" *ngFor="let r of recordings_urls; index as i">
+				<a href='{{r["url"]}}'>{{r["sessionId"]}} </a>
+				<button *ngIf='r["status"] == "ready"' (click)='deleteRecording(i)'>delete</button>
+			</div>
+		</div>
+		
+		<div>
+			<form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+				<input type="text" formControlName="userId"  />
+				<input type="text" formControlName="password"   />
+				<button type="submit" id="loginButton" >login</button>
+			</form>
+		</div>		
 	</div>
+
+
 
 
 	<mat-toolbar class="footer">
@@ -45,7 +64,8 @@
 				target="_blank"
 			>
 				Unsplash
-			</a></span
-		>
+			</a>
+		</span>
+	
 	</mat-toolbar>
 </div>

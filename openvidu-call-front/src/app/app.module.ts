@@ -68,6 +68,7 @@ import { NotificationService } from './shared/services/notifications/notificatio
 import { StorageService } from './shared/services/storage/storage.service';
 import { CdkOverlayContainer } from './shared/config/custom-cdk-overlay-container';
 import { LocalUsersService } from './shared/services/local-users/local-users.service';
+import { LoginService } from './login.service'
 
 @NgModule({
 	declarations: [
@@ -135,6 +136,7 @@ import { LocalUsersService } from './shared/services/local-users/local-users.ser
 		NotificationService,
 		StorageService,
 		CdkOverlayContainer,
+		LoginService,
 		{ provide: OverlayContainer, useClass: CdkOverlayContainer }
 	],
 	bootstrap: [AppComponent]

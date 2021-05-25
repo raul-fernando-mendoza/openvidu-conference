@@ -14,6 +14,7 @@ app.post('/', async (req: Request, res: Response) => {
 	console.log('Session ID received', req.body);
 	try {
 		const sessionResponse = await openviduService.createSession(sessionId, OPENVIDU_URL, OPENVIDU_SECRET);
+
 		sessionId =sessionResponse.id;
 	} catch (error) {
 		const statusCode = error.response?.status;
@@ -22,12 +23,118 @@ app.post('/', async (req: Request, res: Response) => {
 			return;
 		}
 	}
+
 	try {
 		const response = await openviduService.createToken(sessionId, OPENVIDU_URL, OPENVIDU_SECRET);
+
 		res.status(200).send(JSON.stringify(response.token));
+
+				
 	} catch (error) {
 		handleError(error, res);
 	}
+});
+app.post('/recordings/start', async (req: Request, res: Response) => {
+	let sessionId: string = req.body.sessionId;
+	console.log('Session ID received', req.body);
+	try {
+		openviduService.RecordingsStart(sessionId, OPENVIDU_URL, OPENVIDU_SECRET).then(
+			data =>{
+				console.log("recording has started")
+				res.status(200).send(JSON.stringify(data));
+			},
+			error => {
+				console.log("record failed:" + JSON.stringify(error))
+				res.status(400).send(JSON.stringify(error));
+			}
+		)
+	}
+	catch (error){
+		handleError(error, res);
+	}	
+	
+});
+app.post('/recordings/stop', async (req: Request, res: Response) => {
+	let recordingId: string = req.body.recordingId;
+	console.log('recording to stop', recordingId);
+	try {
+		openviduService.RecordingsStop(recordingId, OPENVIDU_URL, OPENVIDU_SECRET).then(
+			data =>{
+				console.log("recording has stopped")
+				res.status(200).send(JSON.stringify(data));
+			},
+			error => {
+				console.log("record stop failed:" + JSON.stringify(error))
+				res.status(400).send(JSON.stringify(error));
+			}
+		)
+	}
+	catch (error){
+		handleError(error, res);
+	}	
+	
+});
+
+app.post('/recordings/delete', async (req: Request, res: Response) => {
+	let recordingId: string = req.body.recordingId;
+	console.log('recording to delete', recordingId);
+	try {
+		openviduService.RecordingsDelete(recordingId, OPENVIDU_URL, OPENVIDU_SECRET).then(
+			data =>{
+				console.log("recording has been deleted")
+				res.status(200).send(JSON.stringify(data));
+			},
+			error => {
+				console.log("record delete failed:" + JSON.stringify(error))
+				res.status(400).send(JSON.stringify(error));
+			}
+		)
+	}
+	catch (error){
+		handleError(error, res);
+	}	
+	
+});
+
+app.post('/recordings', async (req: Request, res: Response) => {
+	let recordingId: string = req.body.recordingID;
+	console.log('recording to erase', req.body);
+	try {
+		openviduService.Recordings(OPENVIDU_URL, OPENVIDU_SECRET).then(
+			data =>{
+				console.log("recording listed")
+				res.status(200).send(JSON.stringify(data));
+			},
+			error => {
+				console.log("record listing failed:" + JSON.stringify(error))
+				res.status(400).send(JSON.stringify(error));
+			}
+		)
+	}
+	catch (error){
+		handleError(error, res);
+	}	
+	
+});
+
+app.post('/login', async (req: Request, res: Response) => {
+	let userId: string = req.body.userId;
+	let password: string = req.body.password;
+	console.log('validate userId password', req.body);
+		if( userId == "claudia" && password == "Argos4905" ){
+			console.log("User valid")
+			var user = {
+				userId:userId,
+				roles:["admin"]
+			}
+			res.status(200).send(JSON.stringify(user));
+		}
+		else {
+			console.log("user password incorrect:" )
+			res.status(400).send(JSON.stringify({error:"user o password incorrect"}));
+		}
+		
+	
 });
 
 function handleError(error: any, res: Response){

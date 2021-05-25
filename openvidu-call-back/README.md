@@ -1,0 +1,1 @@
+npx cross-env OPENVIDU_URL=https://openvidu.rax.academy OPENVIDU_SECRET=myopenvidusecret nodemon src/app.ts
