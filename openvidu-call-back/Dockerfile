@@ -7,8 +7,9 @@ WORKDIR /app
 COPY ["package.json", "package-lock.json*", "./"]
 
 RUN npm install --production
+RUN npm install --global cross-env
 
 COPY . .
 
-CMD [ "node", "server.js" ]
+CMD [ "npm", "serve" ]
 
