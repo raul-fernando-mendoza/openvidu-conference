@@ -1,6 +1,5 @@
-# syntax=docker/dockerfile:1
-
-FROM node:12.18.1
+# Build OpenVidu Call for production
+FROM node:lts-alpine3.13 as openvidu-call-build
 
 WORKDIR /openvidu-call
 
