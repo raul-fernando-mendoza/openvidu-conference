@@ -68,7 +68,7 @@
         "lint": "ng lint",
         "pack:openvidu-angular": "cd dist/openvidu-angular && npm pack",
         "start": "ng serve",
-        "start:https": "ng serve --host 192.168.1.161 --ssl --ssl-key cert.key --ssl-cert cert.crt",
+        "start:https": "ng serve --host 192.168.15.12 --ssl --ssl-key cert.key --ssl-cert cert.crt",
         "test": "ng test openvidu-call --watch=false --code-coverage"
     },
     "version": "2.17.0"

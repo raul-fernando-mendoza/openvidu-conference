@@ -50,7 +50,6 @@
     "scripts": {
         "build": "webpack",
         "start": "cross-env CALL_OPENVIDU_CERTTYPE=selfsigned nodemon src/app.ts",
-        "serve": "npx cross-env OPENVIDU_URL=https://openvidu.rax.academy OPENVIDU_SECRET=myopenvidusecret node src/app.ts",
         "test": "jest"
     },
     "version": "2.17.0"
