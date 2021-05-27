@@ -4,40 +4,34 @@
 #sudo docker build -f docker/build_rax.dockerfile -t raxacademy:call_build --build-arg BASE_HREF=/ .
 
 #to login to the image and see the content
-# sudo docker run --rm -it --entrypoint=/bin/sh raxacademy:call
+# sudo docker run --rm -it --entrypoint=/bin/sh node:lts-alpine3.13 raxacademy:call_build
 
 #stop all containers
-#docker stop $(docker ps -a -q)
+#sudo docker stop $(sudo docker ps -a -q)
 #delete all containers
-#docker rm $(docker ps -a -q)
+#sudo docker rm $(sudo docker ps -a -q)
 
 #remove all images
-#docker rmi $(docker images -q)
+#docker rmi $(sudo docker images -q)
+
+#restart docker if some network error
+#sudo service docker restart
 
 
 FROM node:lts-alpine3.13 as openvidu-call-build
 
-WORKDIR /openvidu-call
 
-ARG BRANCH_NAME=master
-ARG BASE_HREF=/
+WORKDIR /
+RUN apk add git
+RUN git clone https://github.com/raul-fernando-mendoza/openvidu-conference.git && \
+    rm -f openvidu-conference/openvidu-call-front/package-lock.json && \
+    rm -f openvidu-conference/openvidu-call-back/package-lock.json
+WORKDIR /openvidu-conference
 
-RUN apk add wget unzip
-
-# Download openvidu-call from specific branch (master by default), intall openvidu-browser and build for production
-RUN wget "https://github.com/OpenVidu/openvidu-call/archive/${BRANCH_NAME}.zip" -O openvidu-call.zip && \
-    unzip openvidu-call.zip && \
-    rm openvidu-call.zip && \
-    mv openvidu-call-${BRANCH_NAME}/openvidu-call-front/ . && \
-    mv openvidu-call-${BRANCH_NAME}/openvidu-call-back/ . && \
-    rm openvidu-call-front/package-lock.json && \
-    rm openvidu-call-back/package-lock.json && \
-    rm -rf openvidu-call-${BRANCH_NAME} && \
-    # Install openvidu-call-front dependencies and build it for production
-    npm i --prefix openvidu-call-front && \
+# Install openvidu-call-front dependencies and build it for production
+RUN npm i --prefix openvidu-call-front && \
     npm run build-prod ${BASE_HREF} --prefix openvidu-call-front && \
     rm -rf openvidu-call-front && \
-    # Install openvidu-call-back dependencies and build it for production
     npm i --prefix openvidu-call-back && \
     npm run build --prefix openvidu-call-back && \
     mv openvidu-call-back/dist/* . && \

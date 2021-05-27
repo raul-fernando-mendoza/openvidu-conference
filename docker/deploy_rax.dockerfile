@@ -3,7 +3,7 @@
 
 #sudo docker build -f docker/deploy_rax.dockerfile -t raxacademy:call_deploy --build-arg BASE_HREF=/ .
 #to run it
-#sudo docker run -p 5000:5000 -e OPENVIDU_URL=http://openvidu.rax.academy/ -e OPENVIDU_SECRET=myopenvidusecret raxacademy:call
+#sudo docker run -p 5000:5000 -e OPENVIDU_URL=http://openvidu.rax.academy/ -e OPENVIDU_SECRET=myopenvidusecret raxacademy:call_deploy
 #to login to the image and see the content
 # sudo docker run --rm -it --entrypoint=/bin/sh raxacademy:call_deploy
 
@@ -20,8 +20,7 @@
 FROM node:lts-alpine3.13
 
 WORKDIR /opt/openvidu-call
-#RUN apk cross-env
 
-COPY --from=raxacademy:call_build /openvidu-call/. .
+COPY --from=raxacademy:call_build /openvidu-conference/. .
 
 CMD ["npx","cross-env","OPENVIDU_URL=https://openvidu.rax.academy","OPENVIDU_SECRET=myopenvidusecret","node","/opt/openvidu-call/openvidu-call-server.js"]
