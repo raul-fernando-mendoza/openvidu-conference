@@ -116,6 +116,10 @@ h4 {
  margin-top:100px;
 }
 
+.roomid{
+  min-width:12em;
+}
+
 .joinForm {
   min-width: 300px;
   margin: 10px auto;
