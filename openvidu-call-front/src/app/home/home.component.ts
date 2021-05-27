@@ -16,7 +16,8 @@ export class HomeComponent implements OnInit {
 	public version = require('../../../package.json').version;
 
 
-	  	
+	yourDate = new Date()
+	today = this.yourDate.toISOString().split('T')[0]	
 
 	constructor(
 		private router: Router,
@@ -26,6 +27,7 @@ export class HomeComponent implements OnInit {
 		) {}
 
 	recordings_urls = []
+	rooms = ["Tecnica_" + this.today, "Improvisacion_" + this.today]
 
 	ngOnInit() {
 		const randomName = uniqueNamesGenerator({ dictionaries: [adjectives, colors, animals], separator: '-', });
