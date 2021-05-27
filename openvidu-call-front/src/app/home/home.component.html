@@ -1,8 +1,6 @@
 <div class="section1">
 	<mat-toolbar id="header">
-		<a href="http://www.raxacademy.com/" target="_blank">
-			<img id="header_img" alt="RaxAcademy Logo" src="assets/images/rax_logo_no_text.png" />
-		</a>
+
 		<span>Video Conference Rooms</span>
 		<span class="example-spacer"></span>
 		<span>
@@ -10,11 +8,7 @@
 		</span>
 	</mat-toolbar>
 	<div >
-		
-		<div class="ovInfo">
-			<img class="ovLogo" alt="RaxAcademy Logo" src="assets/images/rax_logo_text_only.png" />
-			<h4></h4>
-		</div>
+
 
 		<div  id="requiredNameError" *ngIf="roomForm.hasError('required')">
 			Room name is <strong>required</strong>
@@ -25,7 +19,7 @@
 
 		<mat-toolbar class="transparent">
 
-			<span class="example-spacer"></span>
+	
 			<form class="white" [formGroup]="roomForm" novalidate (ngSubmit)="goToVideoCall()">
 			
 	

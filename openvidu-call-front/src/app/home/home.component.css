@@ -1,5 +1,5 @@
 .section1 {
-  background: url('../../assets/images/ted.jpg')  center center no-repeat;
+  background: url('../../assets/images/home.jpg')  top center no-repeat;
   background-size: cover;
   height: 100%;
   text-align: center;
@@ -109,9 +109,11 @@ h4 {
 }
 
 .white{
- background: white; 
+ background: #999999;
+ color: white; 
  border-radius: 25px;
  padding:10px;
+ margin-top:100px;
 }
 
 .joinForm {
