@@ -121,7 +121,8 @@ app.post('/login', async (req: Request, res: Response) => {
 	let userId: string = req.body.userId;
 	let password: string = req.body.password;
 	console.log('validate userId password', req.body);
-		if( userId == "claudia" && password == "Argos4905" ){
+		if( (userId == "claudia" && password == "abc123") ||
+		     (userId == "virginia" && password == "abc123") ){
 			console.log("User valid")
 			var user = {
 				userId:userId,
