@@ -22,7 +22,7 @@ export class OpenViduService {
 
         var req = {
             "session":sessionId,
-            "name":sessionId + "_" + ( this.yourDate.toISOString().split('T')[0] ),
+            "name":sessionId + "_" + ( new Date().toISOString().slice(0, 10) ),
             "outputMode":"COMPOSED",
             "hasAudio": true,
             "hasVideo": true,
