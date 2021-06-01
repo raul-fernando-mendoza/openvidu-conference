@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
 		private loginService:LoginService,
 		private route: ActivatedRoute
 		) {
-			this.roomId = parseInt(this.route.snapshot.paramMap.get('roomId'))
+			this.roomId = this.route.snapshot.paramMap.get('roomId')
 		}
 
 	recordings_urls = []
