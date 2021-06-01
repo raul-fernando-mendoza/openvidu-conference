@@ -6,8 +6,8 @@ import { VideoRoomComponent } from './video-room/video-room.component';
 
 const routes: Routes = [
 	{ path: 'login', component: LoginComponent },
-	{ path: '', component: HomeComponent },
 	{ path: 'auladigital/:roomId', component: HomeComponent },
+	{ path: '', component: HomeComponent },	
 	{ path: ':roomName', component: VideoRoomComponent }
 	
 ];
