@@ -1,6 +1,17 @@
 //to run in case error of memory
 node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng serve --host 0.0.0.0
 
+#build using 
+./node_modules/@angular/cli/bin/ng build --prod
+
+#after build run the following to copy the build to the backend 
+cp -a dist/openvidu-call/. ../openvidu-call-back/public/
+
+#the following is to build the image but is not needed any more because de code is loaded by the backend
+sudo docker build --tag openvidu-call-front .
+sudo docker run -d -p 4200:4200 openvidu-call-front
+
+#to test the app open the browser at
 localhost:4200
 
 # OpenviduCall

@@ -1,44 +1,56 @@
 <div class="section1">
 	<mat-toolbar id="header">
-		<a href="https://openvidu.io/" target="_blank">
-			<img id="header_img" alt="RaxAcademy Logo" src="assets/images/openvidu_logo.png" />
-		</a>
-		<div class="ovVersion">
-			<span>{{ version }}</span>
-			
-		</div>
-		
 
+		<span>Video Conference Rooms for raxacademy</span>
+		<span class="example-spacer"></span>
+		<span>
+			<a  class="loginLink" routerLink="login">login</a>
+		</span>
 	</mat-toolbar>
-	<div class="container">
-		<a  routerLink="login">login</a>
-		<div class="ovInfo">
-			<img class="ovLogo" alt="OpenVidu Logo" src="assets/images/openvidu_logo.png" />
-			<h4>Videoconference rooms de Rax Academy</h4>
+	<div >
+
+
+		<div  id="requiredNameError" *ngIf="roomForm.hasError('required')">
+			Room name is <strong>required</strong>
 		</div>
-		<div class="formContainer">
-			<div class="roomError" id="requiredNameError" *ngIf="roomForm.hasError('required')">
-				Room name is <strong>required</strong>
-			</div>
-			<div class="roomError" id="shortNameError" *ngIf="roomForm.hasError('minlength')">
-				Room name is <strong>too short!</strong>
-			</div>
-			<form [formGroup]="roomForm" novalidate (ngSubmit)="goToVideoCall()">
-				<div class="joinForm">
+		<div  id="shortNameError" *ngIf="roomForm.hasError('minlength')">
+			Room name is <strong>too short!</strong>
+		</div>
+
+		<mat-toolbar class="transparent">
+
+
+			<form class="white" [formGroup]="roomForm" novalidate (ngSubmit)="goToVideoCall()">
+
+
+				<!--
 					<input matInput class="inputForm" type="text" [formControl]="roomForm"  autocomplete="off" id="roomInput" />
 					<button type="submit" class="joinButton" id="joinButton" >JOIN</button>
-				</div>
-			</form>
-		</div>
+				-->
 
-		<div *ngIf="isAdmin()">
-			<div class="url" *ngFor="let r of recordings_urls; index as i">
-				<a href='{{r["url"]}}'>{{r["sessionId"]}} </a>
+
+				<mat-form-field class="roomid">
+					<mat-label>Select Room</mat-label>
+					<mat-select  [formControl]="roomForm" >
+						<mat-option  *ngFor="let room of rooms" [value]="room">
+							{{room}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+				<button mat-button type="submit" id="joinButton" >JOIN</button>
+
+			</form>
+			<span class="example-spacer"></span>
+		</mat-toolbar>
+
+		<div class="url" *ngIf="isAdmin()">
+			<div  *ngFor="let r of recordings_urls; index as i">
+				<a href='{{r["url"]}}'>{{r["name"]}} </a>
 				<button *ngIf='r["status"] == "ready"' (click)='deleteRecording(i)'>delete</button>
 			</div>
 		</div>
-		
-	
+
+
 	</div>
 
 
@@ -62,6 +74,6 @@
 				Unsplash
 			</a>
 		</span>
-	
+
 	</mat-toolbar>
 </div>

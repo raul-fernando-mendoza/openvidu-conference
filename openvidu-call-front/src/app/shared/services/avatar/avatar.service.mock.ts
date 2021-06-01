@@ -6,7 +6,7 @@ import { AvatarType } from '../../types/chat-type';
 	providedIn: 'root'
 })
 export class AvatarServiceMock {
-	private openviduAvatar = 'assets/images/openvidu_globe.png';
+	private openviduAvatar = 'assets/images/rax_logo_no_text.png';
 	private capturedAvatar = '';
 
 	constructor() {}

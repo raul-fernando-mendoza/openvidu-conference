@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { uniqueNamesGenerator, adjectives, colors, animals } from 'unique-names-generator';
 import { LoginService } from '../login.service';
 import { NetworkService } from '../shared/services/network/network.service';
@@ -15,21 +15,28 @@ export class HomeComponent implements OnInit {
 	public roomForm: FormControl;
 	public version = require('../../../package.json').version;
 
+	roomId = null
 
-	  	
+
+	yourDate = new Date()
+
 
 	constructor(
 		private router: Router,
 		private networkService:NetworkService,
 
-		private loginService:LoginService
-		) {}
+		private loginService:LoginService,
+		private route: ActivatedRoute
+		) {
+			this.roomId = parseInt(this.route.snapshot.paramMap.get('roomId'))
+		}
 
 	recordings_urls = []
+	rooms = ["Tecnica_I", "Tecnica_II" , "Tecnica_III" , "Improvisacion" ]
 
 	ngOnInit() {
 		const randomName = uniqueNamesGenerator({ dictionaries: [adjectives, colors, animals], separator: '-', });
-		this.roomForm = new FormControl(randomName, [Validators.minLength(4), Validators.required]);
+		this.roomForm = new FormControl(this.roomId, [Validators.minLength(4), Validators.required]);
 
 		this.getRecordingId()
 	}
@@ -48,7 +55,7 @@ export class HomeComponent implements OnInit {
 				let items = data["items"]
 				for( var i =0 ; i< items.length; i++){
 					let recording = items[i]
-					
+
 					this.recordings_urls.push(recording)
 				}
 			},
@@ -69,7 +76,7 @@ export class HomeComponent implements OnInit {
 			error => {
 				console.log("delete error", JSON.stringify(error))
 			}
-		)			
+		)
 	}
 
 
@@ -83,6 +90,6 @@ export class HomeComponent implements OnInit {
 			return true
 		}
 		return false;
-			
+
 	}
 }

@@ -1,5 +1,5 @@
 .section1 {
-  background: url('../../assets/images/bg.webp')  top center no-repeat;
+  background: url('../../assets/images/home.jpg')  top center no-repeat;
   background-size: cover;
   height: 100%;
   text-align: center;
@@ -7,9 +7,17 @@
   color: #fff;
 }
 
+.example-spacer {
+  flex: 1 1 auto;
+}
+
 #header, .footer {
   background-color: transparent;
   color: #ffffff;
+}
+
+.transparent{
+  background-color: transparent;  
 }
 
 .roomError{
@@ -100,6 +108,21 @@ h4 {
   text-align: center;
 }
 
+.white{
+ background: #999999;
+ color: white; 
+ border-radius: 25px;
+ padding:10px;
+ margin-top:100px;
+}
+
+.loginLink{
+   color: white;   
+}
+
+.roomid{
+  min-width:12em;
+}
 
 .joinForm {
   min-width: 300px;

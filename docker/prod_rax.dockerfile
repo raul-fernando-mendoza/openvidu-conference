@@ -1,4 +1,21 @@
 # Build OpenVidu Call for production
+#run the folling to build rax version
+
+#sudo docker build -f docker/prod_rax.dockerfile -t raxacademy:call --build-arg BASE_HREF=/ .
+#to run it
+#sudo docker run -p 5000:5000 -e OPENVIDU_URL=http://openvidu.rax.academy/ -e OPENVIDU_SECRET=myopenvidusecret raxacademy:call
+#to login to the image and see the content
+# sudo docker run --rm -it --entrypoint=/bin/sh raxacademy:call
+
+#stop all containers
+#docker stop $(docker ps -a -q)
+#delete all containers
+#docker rm $(docker ps -a -q)
+
+#remove all images
+#docker rmi $(docker images -q)
+
+
 FROM node:lts-alpine3.13 as openvidu-call-build
 
 WORKDIR /openvidu-call
@@ -24,7 +41,7 @@ RUN wget "https://github.com/OpenVidu/openvidu-call/archive/${BRANCH_NAME}.zip" 
     # Install openvidu-call-back dependencies and build it for production
     npm i --prefix openvidu-call-back && \
     npm run build --prefix openvidu-call-back && \
-    mv openvidu-call-back/dist . && \
+    mv openvidu-call-back/dist/* . && \
     rm -rf openvidu-call-back
 
 
@@ -32,9 +49,9 @@ FROM node:lts-alpine3.13
 
 WORKDIR /opt/openvidu-call
 
-COPY --from=openvidu-call-build /openvidu-call/dist .
+COPY --from=openvidu-call-build /openvidu-call/. .
 # Entrypoint
-COPY ./entrypoint.sh /usr/local/bin
+COPY ./docker/entrypoint.sh /usr/local/bin
 RUN apk add curl && \
     chmod +x /usr/local/bin/entrypoint.sh && \
     npm install -g nodemon
