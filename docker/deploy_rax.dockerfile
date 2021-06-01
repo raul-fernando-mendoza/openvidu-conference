@@ -15,7 +15,8 @@
 #remove all images
 #docker rmi $(docker images -q)
 
-
+#remove all caches
+#docker system prune
 
 FROM node:lts-alpine3.13
 

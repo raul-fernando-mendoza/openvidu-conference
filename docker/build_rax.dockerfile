@@ -1,10 +1,10 @@
 # Build OpenVidu Call for production
 #run the folling to build rax version
 
-#sudo docker build -f docker/build_rax.dockerfile -t raxacademy:call_build --build-arg BASE_HREF=/ .
+#sudo docker build --no-cache -f docker/build_rax.dockerfile -t raxacademy:call_build --build-arg BASE_HREF=/ .
 
 #to login to the image and see the content
-# sudo docker run --rm -it --entrypoint=/bin/sh node:lts-alpine3.13 raxacademy:call_build
+# sudo docker run --rm -it --entrypoint=/bin/sh raxacademy:call_build
 
 #stop all containers
 #sudo docker stop $(sudo docker ps -a -q)
@@ -16,6 +16,9 @@
 
 #restart docker if some network error
 #sudo service docker restart
+
+#remove all caches
+#docker system prune
 
 
 FROM node:lts-alpine3.13 as openvidu-call-build
