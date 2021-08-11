@@ -12,5 +12,5 @@ RUN npm install --global cross-env
 COPY ./dist/openvidu-call-server.js .
 COPY ./public/. ./public
 
-CMD [ "npx", "cross-env", "OPENVIDU_URL=https://openvidu.rax.academy", "OPENVIDU_SECRET=myopenvidusecret", "node", "openvidu-call-server.js" ]
+CMD [ "npx", "cross-env", "OPENVIDU_URL=https://openvidu.raxacademy.com", "OPENVIDU_SECRET=myopenvidusecret", "node", "openvidu-call-server.js" ]
 
