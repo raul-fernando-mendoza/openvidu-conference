@@ -24,4 +24,4 @@ WORKDIR /opt/openvidu-call
 
 COPY --from=raxacademy:call_build /openvidu-conference/. .
 
-CMD ["npx","cross-env","OPENVIDU_URL=https://openvidu.rax.academy","OPENVIDU_SECRET=myopenvidusecret","node","/opt/openvidu-call/openvidu-call-server.js"]
+CMD ["npx","cross-env","OPENVIDU_URL=https://openvidu.raxacademy.com","OPENVIDU_SECRET=myopenvidusecret","node","/opt/openvidu-call/openvidu-call-server.js"]
