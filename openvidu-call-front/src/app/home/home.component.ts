@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
 		}
 
 	recordings_urls = []
-	rooms = ["Tecnica_I", "Tecnica_II" , "Tecnica_III" , "Improvisacion" ]
+	rooms = ["Tecnica_I", "Tecnica_II" , "Tecnica_III" ,  "Tecnica_IV", "Improvisacion" ]
 
 	ngOnInit() {
 		const randomName = uniqueNamesGenerator({ dictionaries: [adjectives, colors, animals], separator: '-', });
